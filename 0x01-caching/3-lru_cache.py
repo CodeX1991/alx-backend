@@ -46,7 +46,7 @@ class LRUCache(BaseCaching):
         if key not in self.cache_data:
             return None
         else:
-            self.cache_data.move_to_end(key)
+            # self.cache_data.move_to_end(key)
             return self.cache_data[key]
 
     def print_cache(self):

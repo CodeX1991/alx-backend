@@ -27,10 +27,11 @@ class LRUCache(BaseCaching):
         """
         if key is not None and item is not None:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                oldest_key, _ = self.cache_data.popitem(last=False)
-                print("DISCARD: " + oldest_key)
+                lst_recently_usd_key, _ = self.cache_data.popitem(last=False)
+                print("DISCARD: " + lst_recently_usd_key)
 
             self.cache_data[key] = item
+            self.cache_data.move_to_end(key)
 
     def get(self, key: str) -> any:
         """
@@ -42,4 +43,16 @@ class LRUCache(BaseCaching):
         Returns:
             any: the item stored in the cache or None if the key doesnt exist
         """
-        return self.cache_data.get(key)
+        if key not in self.cache_data:
+            return None
+        else:
+            self.cache_data.move_to_end(key)
+            return self.cache_data[key]
+
+    def print_cache(self):
+        """
+        Print the contents of the cache in order
+        """
+        print("Current cache:")
+        for key, value in self.cache_data.items():
+            print(key + ": " + value)

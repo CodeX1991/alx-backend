@@ -28,12 +28,6 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.before_request
-def before_request():
-    """Make get_locale global"""
-    g.locale = get_locale()
-
-
 # Handle an endpoint
 @app.route('/')
 def index():
